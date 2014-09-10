@@ -1,0 +1,48 @@
+###########################################
+# Monte Carlo Simulation
+# ---------------------------------
+# Created by  : Adam Nguyen
+# Updated by  : Adam Nguyen
+# Created at  : 09/10/2014
+# Updated at  : xx/xx/xxxx
+# Description : Simulation
+###########################################
+
+#Clear Envisubronment
+#rm(list = ls(all = TRUE))
+#update.packages(ask = FALSE, dependencies = c('Suggests'))
+
+#Set Directory
+setInternet2(TRUE)
+Sys.setenv(language = "en", tz = 'UTC')
+options(max.print = 500)
+setwd("C:/Users/adam.nguyen/Desktop/Alix")
+source(paste(c("C:/Users/adam.nguyen/Desktop/R/GH/", "library.R"), collapse = "")) #Get library
+source(paste(c("C:/Users/adam.nguyen/Desktop/R/GH/", "break_munging.txt"), collapse = "")) #Get tools
+
+#Create dataset
+data <- 1:120
+#levels(data)[1:60] <- "A"
+#levels(data)[61:120] <- "B"
+data[1:60] <- "A"
+data[61:120] <- "B"
+
+#Simulate
+data.set <- NULL
+data.set <- matrix(0, 5, 10^6)
+for (i in 1:10^6){
+    data.set[1:5, i] <- sample(data, 5, replace = FALSE)
+}
+
+#Inspect
+data.set[, 2]
+sum(data.set[, 2] == "A")
+
+#Count Frequencies
+data.vector <- apply(data.set, 2, function(x) sum(x == "A"))
+data.count <- sum(data.vector == 5)
+data.prob <- (data.count * 2) / 10^6
+data.prob
+
+#Evaluate
+(.5 * 59/119 * 58/118 * 57/117 * 56/116) * 2
